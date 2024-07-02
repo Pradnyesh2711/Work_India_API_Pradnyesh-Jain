@@ -27,22 +27,20 @@ router.post('/dining', async (req, res) => {
     }
 });
 
-router.get('/dining-place', async (req, res) => {
-    const { name } = req.query;
-
+router.get('/dining-places', async (req, res) => {
     try {
-        // Example query to search dining places by name containing specific keywords
-        const [results, fields] = await pool.execute('SELECT * FROM dining_places WHERE name LIKE ?', [`%${name}%`]);
+        // Example query to fetch all dining places from the database
+        const [results, fields] = await pool.execute('SELECT * FROM dining_places');
 
         res.status(200).json({
-            status: 'Dining places retrieved successfully',
+            status: 'Success',
             status_code: 200,
             dining_places: results
         });
     } catch (error) {
-        console.error('Error searching dining places:', error);
+        console.error('Error fetching dining places:', error);
         res.status(500).json({
-            status: 'Error searching dining places',
+            status: 'Error',
             status_code: 500,
             error: error.message
         });

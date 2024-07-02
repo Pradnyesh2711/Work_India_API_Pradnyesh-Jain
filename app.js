@@ -11,6 +11,7 @@ app.use('/api', diningRoutes);
 app.get('/', (req, res) => {
     res.send('Welcome to the API'); // Replace with your desired response
 });
+
 app.use((err, req, res, next) => {
     console.error('Error:', err.stack);
     res.status(500).send('Something broke!');
