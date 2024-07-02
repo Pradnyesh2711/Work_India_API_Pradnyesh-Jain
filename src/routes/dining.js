@@ -104,5 +104,35 @@ router.post('/dining-place/availability', async (req, res) => {
 function isWithinOpeningHours(openingTime, closingTime, checkTime) {
     return checkTime >= openingTime && checkTime <= closingTime;
 }
+router.post('/dining-place/book', async (req, res) => {
+    const { name, startTime, endTime } = req.body;
+
+    try {
+        if (!name || !startTime || !endTime) {
+            throw new Error('Missing required parameters');
+        }
+
+        // Example: Update availability based on name
+        const [results, _] = await pool.execute(
+            'UPDATE dining_places SET availability = ?, start_time = ?, end_time = ? WHERE name = ?',
+            [true, startTime, endTime, name]
+        );
+
+        res.status(200).json({
+            status: 'Slot booked successfully',
+            status_code: 200,
+            booking_id: results.insertId
+        });
+    } catch (error) {
+        console.error('Error booking slot:', error);
+        res.status(500).json({
+            status: 'Error booking slot',
+            status_code: 500,
+            error: error.message
+        });
+    }
+});
+
+
 
 module.exports = router;
