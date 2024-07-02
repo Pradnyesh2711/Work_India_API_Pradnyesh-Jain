@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 app.use('/api', authRoutes);
 app.use('/api', diningRoutes);
 app.get('/', (req, res) => {
-    res.send('Welcome to the API'); // Replace with your desired response
+    res.send('Welcome to the API'); 
 });
 
 app.use((err, req, res, next) => {
